@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Smoothies</title>
+    <meta name="description" content="Find Recipes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    <div id="app">
+        <h1>{{ message }}</h1>
+    </div>
+
+    <div class="main"id="find">
+        
+        <div>
+            <h2>Select the ingredients you want to use in your smoothie!</h2>
+            <input class="search" type="text" id="ingSearch" v-on:keyup="search" placeholder="Search for ingredients.." title="Type in an ingredient">              
+            <div class="checkbox" id="ingredient_checkboxes">    
+                <div
+                    v-for="item in all_ingredients"
+                    v-bind:ingredient="item">
+                    <input type="checkbox" v-bind:id="item.name" v-bind:value="item.name" v-model="checkedIngredients">
+                    <label v-bind:for="item.name">{{item.name}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="button" id="collapsible" v-on:click="findSmoothies">Find Smoothies!</div>
+                <div class="content" v-if="availableSmoothies.length >= 1">
+                    <h2>Below are all the available smoothies. Click for a detailed recipe.</h2>
+                    <ul>
+                        <smoothie-template 
+                            v-for="item in availableSmoothies"
+                            v-bind:smoothie="item[0]"
+                            v-bind:ingredients="item[1]"
+                            v-bind:key="item.name">
+                        </smoothie-template>
+                    </ul>
+                </div> 
+                <div class="content" v-else>
+                    <h2>Not enough ingredients</h2>
+                </div>
+        </div>
+    </div>
+
+
+    <script src="scripts/find.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
